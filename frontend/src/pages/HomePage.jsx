@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import AiFill from "../assets/ai-fill.svg";
 import Banner from "../assets/banner.svg";
 import Upload from "../assets/upload.svg";
@@ -5,10 +6,11 @@ import Scan from "../assets/scan.svg";
 import Decision from "../assets/decision.svg";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   return (
     <div className="bg-[hsl(38,8%,81%)] text-gray-900 font-sans">
       {/* Navbar */}
-      <nav className="flex justify-between items-center px-32 md:px-12 py-4 border-b">
+      <nav className="flex justify-between items-center px-32 md:px-12 py-4 border-b shadow-md">
         <span className="text-lg font-bold cursor-pointer">Docspect.AI</span>
         <div>
           <button
@@ -21,7 +23,10 @@ export default function HomePage() {
           >
             How It Works
           </button>
-          <button className="bg-[#1D2D5F] text-white hover:bg-[#16264d] transition px-6 py-3 rounded-md cursor-pointer font-bold">
+          <button
+            className="bg-[#1D2D5F] text-white hover:bg-[#16264d] transition px-6 py-3 rounded-md cursor-pointer font-bold"
+            onClick={() => navigate("/upload")}
+          >
             Try Now
           </button>
         </div>
@@ -49,7 +54,10 @@ export default function HomePage() {
             <li>✔ Multilingual Support</li>
             <li>✔ Quick and Easy to Use</li>
           </ul>
-          <button className="mt-8 bg-[#1D2D5F] text-white px-8 py-4 rounded-lg font-semibold text-xl shadow-lg hover:bg-[#16264d] transition cursor-pointer">
+          <button
+            className="mt-8 bg-[#1D2D5F] text-white px-8 py-4 rounded-lg font-semibold text-xl shadow-lg hover:bg-[#16264d] transition cursor-pointer"
+            onClick={() => navigate("/upload")}
+          >
             Upload Now
           </button>
         </div>
@@ -59,6 +67,7 @@ export default function HomePage() {
           <img src={Banner} alt="Contract Analysis" className="w-lg max-w-2xl md:max-w-3xl lg:max-w-4xl" />
         </div>
       </div>
+
 
 
 
@@ -80,7 +89,7 @@ export default function HomePage() {
           {/* Step 1 */}
           <div className="flex items-center justify-between w-full text-left">
             <div className="max-w-md">
-              <h3 className="font-bold text-2xl text-gray-800">Step 1: <br/>Upload Your Contract</h3>
+              <h3 className="font-bold text-2xl text-gray-800">Step 1: <br />Upload Your Contract</h3>
               <p className="mt-2 text-gray-600">
                 Easily drag and drop your PDF or text file into our secure platform.
               </p>
@@ -91,7 +100,7 @@ export default function HomePage() {
           {/* Step 2 */}
           <div className="flex items-center justify-between w-full text-left">
             <div className="max-w-md">
-              <h3 className="font-bold text-2xl text-gray-800">Step 2: <br/>Review Informational Insights</h3>
+              <h3 className="font-bold text-2xl text-gray-800">Step 2: <br />Review Informational Insights</h3>
               <p className="mt-2 text-gray-600">
                 Our AI engine scans the contract and presents its findings, highlighting
                 issues in order of their risk level.
@@ -103,7 +112,7 @@ export default function HomePage() {
           {/* Step 3 */}
           <div className="flex items-center justify-between w-full text-left">
             <div className="max-w-md">
-              <h3 className="font-bold text-2xl text-gray-800">Step 3: <br/>Make Informed Decisions</h3>
+              <h3 className="font-bold text-2xl text-gray-800">Step 3: <br />Make Informed Decisions</h3>
               <p className="mt-2 text-gray-600">
                 Leverage these insights to negotiate better terms, identify risks, and
                 finalize your contract with confidence.
@@ -113,6 +122,6 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
