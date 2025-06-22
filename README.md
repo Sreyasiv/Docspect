@@ -19,9 +19,6 @@ Docspect streamlines contract analysis by leveraging AI to extract key clauses, 
 - **User-Friendly Interface**: Intuitive UI for seamless document uploads and reviews.
 - **Data Security & Privacy**: Ensures confidentiality and security of uploaded documents.
 
-## Are you using PromptRepo?
-No
-
 ## What kind of AI model are you using? 
 - Search
 - Classification
@@ -36,13 +33,6 @@ No
 - OpenAI API
 - pdfminer
 - Git, GitHub
-
-## Team Members
-- [Ahamed Meyan U](https://github.com/Ahamed1846/Docspect.git)
-- Sreya S
-- Yogeshwaran M
-- Jebakumar
-- Reshma Devraj
 
 ## Resources
 - **Presentation**: [View Presentation](https://docs.google.com/presentation/d/1TUqAsfeA1eUd9Pskq32ibZgPD6pXixMlOVwz5pt9aHs/edit#slide=id.p)
