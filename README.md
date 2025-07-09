@@ -1,8 +1,6 @@
 # Docspect
 Docspect is an AI-powered contract analysis platform that helps users quickly review and understand legal documents by identifying key clauses, risks, and anomalies.
 
-## Are you solving a real-world problem? (Yes)
-
 ### Problem
 Legal documents are often complex and difficult to interpret, leading to inefficiencies and potential legal risks. Many individuals and businesses struggle to quickly identify key clauses, risks, and inconsistencies, making contract review a time-consuming process.
 
@@ -16,12 +14,6 @@ Docspect streamlines contract analysis by leveraging AI to extract key clauses, 
 - **Case Insights**: Provides contextual legal insights related to the contract’s terms.
 - **User-Friendly Interface**: Intuitive UI for seamless document uploads and reviews.
 - **Data Security & Privacy**: Ensures confidentiality and security of uploaded documents.
-
-## What kind of AI model are you using? 
-- Search
-- Classification
-- Extraction
-- Generation
 
 ## Technologies Stack
 - Node.js
