@@ -29,7 +29,7 @@ export default function AnalysisPage() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      // Set analysis data directly from backend
+      console.log("📄 Analysis response:", response.data);
       setAnalysisData(response.data);
     } catch (err) {
       console.error("Upload failed:", err);
@@ -42,7 +42,17 @@ export default function AnalysisPage() {
   if (!analysisData) {
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-700">
-        <p>No analysis data found. Please upload a document first.</p>
+        <div className="space-y-4 text-center">
+          <p>No analysis data found. Please upload a document first.</p>
+          <input type="file" onChange={handleFileChange} />
+          <button
+            onClick={handleUpload}
+            disabled={loading}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            {loading ? "Analyzing..." : "Upload & Analyze"}
+          </button>
+        </div>
       </div>
     );
   }
@@ -61,7 +71,6 @@ export default function AnalysisPage() {
         <div className="w-full max-w-6xl space-y-6">
           <h1 className="text-3xl font-bold text-[#1D2B4F]">AI-Reviewed Report</h1>
 
-          {/* Data Display */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-8">
               {/* Risk Score Section */}
@@ -72,13 +81,14 @@ export default function AnalysisPage() {
                 </div>
                 <div className="w-48">
                   <GaugeChart
-                    id="risk-chart"
-                    nrOfLevels={5}
-                    colors={["#2ECC71", "#F1C40F", "#E74C3C"]}
-                    arcWidth={0.3}
-                    percent={(analysisData.riskScore || 0) / 100}
-                  />
+                  id="risk-chart"
+                  nrOfLevels={5} // Total tick marks (optional, can be more)
+                  colors={[ "#2ECC71","#F1C40F","#E74C3C"]} // green yellow red
+                  arcWidth={0.3}
+                  percent={(analysisData.riskScore || 0) / 100}
+                />
                 </div>
+
                 {/* AI Recommendations */}
                 {analysisData.recommendations?.length > 0 && (
                   <div className="mt-4">
@@ -94,9 +104,25 @@ export default function AnalysisPage() {
                 )}
               </div>
 
-              {/* Summary + Risks */}
+              {/* Summary */}
               <DocumentSummary summary={analysisData.summary} />
-              <RiskFactors keyClauses={analysisData.keyClauses || []} />
+
+              {/* Key Clauses */}
+              {analysisData?.keyClauses?.length > 0 && (
+                <div className="bg-white rounded-lg p-6 shadow-md">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Key Clauses</h3>
+                  <ul className="list-disc list-inside text-gray-700 space-y-1">
+                    {analysisData.keyClauses.map((clause, idx) => (
+                      <li key={idx}>{clause}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Risk Factors */}
+              {analysisData?.riskClauses && (
+                <RiskFactors riskClauses={analysisData.riskClauses} />
+              )}
             </div>
 
             {/* Right Sidebar */}

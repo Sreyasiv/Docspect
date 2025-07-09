@@ -39,13 +39,9 @@ export default function DocspectUpload() {
         state: {
           analysisData: {
             summary: response.data.summary,
-            riskScore: 72, // static for now
-            recommendations: ["Add arbitration clause", "Specify governing law clearly"],
-            keyClauses: ["Termination clause missing", "Ambiguous liability section"],
-            caseStudies: [
-              { title: "Case A vs B", detail: "Similar clause interpretation in 2020." },
-              { title: "Contract Y ruling", detail: "Risk due to vague jurisdiction." },
-            ],
+            recommendations: response.data.recommendations,
+            keyClauses: response.data.keyClauses,
+            caseStudies: response.data.caseStudies,
           },
         },
       });
