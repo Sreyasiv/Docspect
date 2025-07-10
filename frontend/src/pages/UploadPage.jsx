@@ -40,11 +40,13 @@ export default function DocspectUpload() {
           analysisData: {
             summary: response.data.summary,
             recommendations: response.data.recommendations,
-            keyClauses: response.data.keyClauses,
+            // keyClauses: response.data.keyClauses,
+            riskClauses: response.data.riskClauses,
             caseStudies: response.data.caseStudies,
           },
         },
       });
+      console.log("📄 Analysis response:", response.data);
     } catch (err) {
       console.error("Upload failed:", err);
       alert("Something went wrong!");

@@ -7,6 +7,7 @@ import RiskFactors from "../analysis/riskFactors";
 import CaseStudies from "../analysis/CaseStudies";
 import axios from "axios";
 import { useState } from "react";
+import { AlertTriangle } from "lucide-react";
 
 export default function AnalysisPage() {
   const navigate = useNavigate();
@@ -81,12 +82,12 @@ export default function AnalysisPage() {
                 </div>
                 <div className="w-48">
                   <GaugeChart
-                  id="risk-chart"
-                  nrOfLevels={5} // Total tick marks (optional, can be more)
-                  colors={[ "#2ECC71","#F1C40F","#E74C3C"]} // green yellow red
-                  arcWidth={0.3}
-                  percent={(analysisData.riskScore || 0) / 100}
-                />
+                    id="risk-chart"
+                    nrOfLevels={5}
+                    colors={["#2ECC71", "#F1C40F", "#E74C3C"]}
+                    arcWidth={0.3}
+                    percent={(analysisData.riskScore || 0) / 100}
+                  />
                 </div>
 
                 {/* AI Recommendations */}
@@ -107,22 +108,31 @@ export default function AnalysisPage() {
               {/* Summary */}
               <DocumentSummary summary={analysisData.summary} />
 
-              {/* Key Clauses */}
-              {analysisData?.keyClauses?.length > 0 && (
-                <div className="bg-white rounded-lg p-6 shadow-md">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Key Clauses</h3>
-                  <ul className="list-disc list-inside text-gray-700 space-y-1">
-                    {analysisData.keyClauses.map((clause, idx) => (
-                      <li key={idx}>{clause}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              {/* RISK CLAUSES */}
+              {analysisData?.riskClauses?.length > 0 && (
+                  <div Upload className="bg-white rounded-lg p-6 shadow-md">
+                    <h3 className="text-xl font-bold text-black mb-4 flex items-center gap-2">
+                      <AlertTriangle className="text-red-600 w-5 h-5" />
+                      Risk Clauses Detected
+                    </h3>
 
-              {/* Risk Factors */}
-              {analysisData?.riskClauses && (
-                <RiskFactors riskClauses={analysisData.riskClauses} />
-              )}
+                    <div className="space-y-6">
+                      {analysisData.riskClauses.map((item, idx) => (
+                        <div key={idx} className="border-l-4 border-red-600 pl-4">
+                          <p className="text-lg font-semibold text-red-800 mb-2">
+                            Clause {idx + 1}:
+                          </p>
+                          <p className="text-base text-gray-800 whitespace-pre-line">{item.clause}</p>
+
+                          <div className="bg-green-50 border-l-4 border-green-600 mt-4 p-4 rounded">
+                            <p className="text-green-700 font-bold underline mb-1">AI Suggestion</p>
+                            <p className="text-sm text-green-900 whitespace-pre-line">{item.advice}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
             </div>
 
             {/* Right Sidebar */}
