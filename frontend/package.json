@@ -11,12 +11,13 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.4",
+    "axios": "^1.11.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.475.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.5",
-    "react-gauge-chart": "^0.5.1",
+    "react-gauge-component": "^1.2.64",
     "react-router-dom": "^7.1.5",
     "tailwindcss": "^4.0.4"
   },

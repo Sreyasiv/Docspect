@@ -10,10 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.11.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "mammoth": "^1.9.1",
+    "multer": "^2.0.2",
     "pdf-parse": "^1.1.1"
   },
   "description": ""

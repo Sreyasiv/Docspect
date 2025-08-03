@@ -1,13 +1,15 @@
 // pages/AnalysisPage.jsx
 import { useNavigate, useLocation } from "react-router-dom";
-import GaugeChart from "react-gauge-chart";
 import { Shield } from "lucide-react";
 import DocumentSummary from "../analysis/summarize";
 import RiskFactors from "../analysis/riskFactors";
+import { GaugeComponent } from "react-gauge-component";
 import CaseStudies from "../analysis/CaseStudies";
 import axios from "axios";
 import { useState } from "react";
 import { AlertTriangle } from "lucide-react";
+import { ShieldCheck,Ban } from "lucide-react";
+
 
 export default function AnalysisPage() {
   const navigate = useNavigate();
@@ -80,29 +82,31 @@ export default function AnalysisPage() {
                   <Shield className="w-6 h-6 text-[#1D2D5F]" />
                   <span>Document Risk Score</span>
                 </div>
-                <div className="w-48">
-                  <GaugeChart
+                <div className="w-64 h-46">
+                  <GaugeComponent
                     id="risk-chart"
                     nrOfLevels={5}
                     colors={["#2ECC71", "#F1C40F", "#E74C3C"]}
-                    arcWidth={0.3}
+                    arcWidth={0.5}
                     percent={(analysisData.riskScore || 0) / 100}
+                    style={{ width: "300px", height: "150px" }}
                   />
                 </div>
+                    <div className="space-y-1 text-base text-gray-700">
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck className="w-5 h-5 text-green-600" />
+                        <span>Score below 40: This document is generally safe.</span>
+                      </div>
 
-                {/* AI Recommendations */}
-                {analysisData.recommendations?.length > 0 && (
-                  <div className="mt-4">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                      AI Recommendations
-                    </h3>
-                    <ul className="list-disc list-inside text-gray-700 space-y-1">
-                      {analysisData.recommendations.map((rec, idx) => (
-                        <li key={idx}>{rec}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                      <div className="flex items-center gap-2">
+                        <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                        <span>Score between 40–60: This document may need caution.</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Ban className="w-5 h-5 text-red-600" />
+                        <span>Score above 60: This document is risky and may need legal review.</span>
+                      </div>
+                    </div>
               </div>
 
               {/* Summary */}
