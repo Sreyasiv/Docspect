@@ -1,31 +1,59 @@
-# Docspect
-Docspect is an AI-powered contract analysis platform that helps users quickly review and understand legal documents by identifying key clauses, risks, and anomalies.
+<h1 align="center">🕵️‍♂️ Docspect</h1>
+<p align="center">
+🚀 <b>AI-Powered Contract Analysis</b> that helps you <i>review legal documents in minutes</i>.
+</p>
 
-### Problem
-Legal documents are often complex and difficult to interpret, leading to inefficiencies and potential legal risks. Many individuals and businesses struggle to quickly identify key clauses, risks, and inconsistencies, making contract review a time-consuming process.
+---
 
-### Solution
-Docspect streamlines contract analysis by leveraging AI to extract key clauses, highlight risks, and provide concise summaries, making legal document review more efficient and accessible.
+## 📌 Problem
+Legal documents are often **complex**, making it hard for individuals and businesses to:
+- Quickly **identify key clauses & risks**
+- Detect **inconsistencies & anomalies**
+- Avoid **time-consuming manual reviews**
 
-## Docspect Features
-- **AI-Powered Clause Extraction**: Automatically detects and highlights critical clauses within contracts.
-- **Risk Analysis**: Identifies potential risks, inconsistencies, and red flags in legal documents.
-- **Keyword Search & Summarization**: Enables users to search for specific terms and receive a concise summary of contract content.
-- **Case Insights**: Provides contextual legal insights related to the contract’s terms.
-- **User-Friendly Interface**: Intuitive UI for seamless document uploads and reviews.
-- **Data Security & Privacy**: Ensures confidentiality and security of uploaded documents.
+---
 
-## Technologies Stack
-- Node.js
-- Express.js
-- React
-- Tailwind CSS
-- OpenAI API
-- pdfminer
-- Git, GitHub
+## 💡 Solution
+**Docspect** makes legal review faster and smarter by:
+- 📝 Providing **clear, concise summaries** of your documents  
+- ⚠️ Highlighting **risk clauses** and offering **AI-powered suggestions**  
+- 📚 Delivering **relevant case studies** for deeper context  
 
-## Resources
-- **Presentation**: [View Presentation](https://docs.google.com/presentation/d/1TUqAsfeA1eUd9Pskq32ibZgPD6pXixMlOVwz5pt9aHs/edit#slide=id.p)
-- **Prototype**: [View Prototype](https://www.figma.com/proto/apnH9V828nWSCeOGyCKtTq/Docspect-Prototype?node-id=1-4&p=f&t=f70eUyokoemXZolq-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A4)
+---
 
-Docspect empowers users to navigate complex contracts with ease, reducing the time and effort required for legal review.
+## ✨ Features
+- 🔍 **AI-Powered Clause Extraction** – Detects & highlights critical contract clauses.
+- ⚠️ **Risk Analysis** – Spots potential risks, inconsistencies, and anomalies.
+- 📚 **Case Insights** – Contextual legal case references tied to your contract.
+- 🖥️ **User-Friendly Interface** – Upload & review in a few clicks.
+- 🔐 **Data Security & Privacy** – Your documents stay confidential.
+
+---
+
+## 🛠️ Tech Stack
+<p>
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
+<img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"/>
+<img src="https://img.shields.io/badge/PDF%20Parser-FF6F00?style=for-the-badge&logo=adobeacrobatreader&logoColor=white"/>
+<img src="https://img.shields.io/badge/PDFMiner-F9A03C?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Mammoth-6D4AFF?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/OpenRouter-4E9CAF?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Mistral%207B-FF4B4B?style=for-the-badge"/>
+</p>
+
+---
+
+## 📂 Resources
+- 🎤 **Presentation:** [View Presentation](https://docs.google.com/presentation/d/1TUqAsfeA1eUd9Pskq32ibZgPD6pXixMlOVwz5pt9aHs/edit#slide=id.p)  
+- 🎨 **Prototype:** [View Prototype](https://www.figma.com/proto/apnH9V828nWSCeOGyCKtTq/Docspect-Prototype?node-id=1-4&p=f&t=f70eUyokoemXZolq-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A4)
+
+---
+
+## 📜 License
+🛡️ **Proprietary** — All rights reserved.
+
+---
+
+<p align="center">
+Made with ❤️ by the <b>Docspect Team</b>
+</p>
