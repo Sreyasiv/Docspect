@@ -30,7 +30,7 @@ export default function DocspectUpload() {
     formData.append("document", file);
 
     try {
-      const response = await axios.post("http://localhost:3001/api/summarize", formData, {
+      const response = await axios.post("https://docspect.onrender.com/api/summarize", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
