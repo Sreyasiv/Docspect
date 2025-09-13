@@ -7,7 +7,7 @@ async function summarizeWithOpenRouter(prompt) {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'mistralai/mistral-7b-instruct',
+        model: 'openai/gpt-4o-mini',
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 500,
       },
@@ -19,9 +19,14 @@ async function summarizeWithOpenRouter(prompt) {
         },
       }
     );
-    return response.data.choices[0].message.content;
+    const text = response?.data?.choices?.[0]?.message?.content || response?.data?.output?.[0]?.content?.[0]?.text;
+    return text;
   } catch (error) {
-    console.error("🛑 OpenRouter summarization failed:", error.response?.data || error.message);
+    console.error("🛑 OpenRouter summarization failed:", {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    });
     throw new Error("Summarization failed");
   }
 }
