@@ -7,6 +7,8 @@ import RiskScoreGauge from "../components/analysis/RiskScoreGauge";
 import DocumentSummary from "../components/analysis/DocumentSummary";
 
 
+const base = import.meta.env.VITE_API_BASE;
+
 export default function AnalysisPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,7 +22,7 @@ export default function AnalysisPage() {
     formData.append("document", file);
 
     try {
-      const res = await axios.post("https://docspect.onrender.com/api/summarize", formData, {
+      const res = await axios.post(`${base}/api/summarize`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setAnalysisData({

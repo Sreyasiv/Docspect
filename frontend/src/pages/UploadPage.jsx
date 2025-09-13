@@ -9,6 +9,8 @@ export default function DocspectUpload() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const base = import.meta.env.VITE_API_BASE;
+
   const onDrop = (acceptedFiles) => {
     if (acceptedFiles.length > 0) setFile(acceptedFiles[0]);
   };
@@ -30,7 +32,7 @@ export default function DocspectUpload() {
     formData.append("document", file);
 
     try {
-      const response = await axios.post("https://docspect.onrender.com/api/summarize", formData, {
+      const response = await axios.post(`${base}/api/summarize`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
