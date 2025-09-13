@@ -20,7 +20,7 @@ export default function AnalysisPage() {
     formData.append("document", file);
 
     try {
-      const res = await axios.post("http://localhost:3001/api/summarize", formData, {
+      const res = await axios.post("https://docspect.onrender.com/api/summarize", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setAnalysisData({
