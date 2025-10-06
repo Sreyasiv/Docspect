@@ -72,29 +72,29 @@ export default function DocspectUpload() {
         />
       ) : null}
       {/* Header */}
-      <div className="w-full py-6 px-32 border-b border-black shadow-md fixed top-0 left-0 bg-[hsl(38,8%,81%)] z-10">
+      <div className="w-full py-4 md:py-6 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 2xl:px-32 border-b border-black shadow-md fixed top-0 left-0 bg-[hsl(38,8%,81%)] z-10">
         <span className="text-lg font-bold cursor-pointer" onClick={() => navigate("/")}>
           Docspect.AI
         </span>
       </div>
 
       {/* Main */}
-      <div className="flex-grow flex flex-col justify-center items-center">
-        <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">Upload Your Document</h1>
-        <div className="bg-white shadow-lg rounded-lg p-8 w-[500px]">
+      <div className="flex-grow flex flex-col justify-center items-center px-4 sm:px-6">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 mb-6 sm:mb-8 text-center">Upload Your Document</h1>
+        <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 md:p-8 w-full max-w-sm sm:max-w-md md:max-w-lg">
           <h2 className="text-lg font-semibold mb-2">Upload Document</h2>
           <p className="text-sm text-gray-500 mb-6">
             Please upload a file in PDF or DOCX format (Max: 25MB).
           </p>
 
           {/* Dropzone */}
-          <div {...getRootProps()} className="border-2 border-dashed border-gray-400 p-8 rounded-lg text-center cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+          <div {...getRootProps()} className="border-2 border-dashed border-gray-400 p-6 sm:p-8 rounded-lg text-center cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
             <input {...getInputProps()} />
-            <Upload className="w-12 h-12 mx-auto text-gray-500" />
-            <p className="text-base text-gray-600 font-medium mt-2">
+            <Upload className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-500" />
+            <p className="text-sm sm:text-base text-gray-600 font-medium mt-2">
               {isDragActive ? "Drop the file here..." : "Drop file or browse"}
             </p>
-            <p className="text-sm text-gray-500">Format: .pdf, .docx | Max size: 25MB</p>
+            <p className="text-xs sm:text-sm text-gray-500">Format: .pdf, .docx | Max size: 25MB</p>
           </div>
 
           {/* File Info */}
@@ -105,9 +105,9 @@ export default function DocspectUpload() {
           )}
 
           {/* Buttons */}
-          <div className="flex justify-between mt-8">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between mt-6 sm:mt-8">
             <button
-              className="px-5 py-2 text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+              className="px-4 sm:px-5 py-2 text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
               onClick={() => setFile(null)}
             >
               Cancel
@@ -115,7 +115,7 @@ export default function DocspectUpload() {
             <button
               onClick={handleUploadAndNavigate}
               disabled={!file || loading}
-              className={`px-5 py-2 text-white rounded-lg transition ${file ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
+              className={`px-4 sm:px-5 py-2 text-white rounded-lg transition ${file ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
             >
               {loading ? "Analyzing..." : "Done"}
             </button>
