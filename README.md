@@ -46,8 +46,11 @@ Legal documents are often **complex**, making it hard for individuals and busine
 ## 📂 Resources
 - 🎤 **Presentation:** [View Presentation](https://docs.google.com/presentation/d/1TUqAsfeA1eUd9Pskq32ibZgPD6pXixMlOVwz5pt9aHs/edit#slide=id.p)  
 - 🎨 **Prototype:** [View Prototype](https://www.figma.com/proto/apnH9V828nWSCeOGyCKtTq/Docspect-Prototype?node-id=1-4&p=f&t=f70eUyokoemXZolq-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A4)
+- 🖥️**Live site**[View live site](https://docspect.netlify.app/)
 
 ---
+
+
 
 ## 📜 License
 🛡️ **Proprietary** — All rights reserved.
