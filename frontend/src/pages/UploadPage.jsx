@@ -3,6 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "../components/Loader";
 
 export default function DocspectUpload() {
   const [file, setFile] = useState(null);
@@ -59,6 +60,17 @@ export default function DocspectUpload() {
 
   return (
     <div className="bg-[hsl(38,8%,81%)] h-screen flex flex-col">
+      {loading ? (
+        <Loader
+          message="Analyzing your document…"
+          subMessages={[
+            "Uploading securely…",
+            "Extracting text and structure…",
+            "Detecting risky clauses…",
+            "Summarizing key points…",
+          ]}
+        />
+      ) : null}
       {/* Header */}
       <div className="w-full py-6 px-32 border-b border-black shadow-md fixed top-0 left-0 bg-[hsl(38,8%,81%)] z-10">
         <span className="text-lg font-bold cursor-pointer" onClick={() => navigate("/")}>

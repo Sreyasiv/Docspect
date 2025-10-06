@@ -5,6 +5,7 @@ import axios from "axios";
 import FileUpload from "../components/analysis/FileUpload";
 import RiskScoreGauge from "../components/analysis/RiskScoreGauge";
 import DocumentSummary from "../components/analysis/DocumentSummary";
+import Loader from "../components/Loader";
 
 
 const base = import.meta.env.VITE_API_BASE;
@@ -37,7 +38,22 @@ export default function AnalysisPage() {
   };
 
   if (!analysisData) {
-    return <FileUpload onUpload={handleFileUpload} loading={loading} />;
+    return (
+      <>
+        {loading ? (
+          <Loader
+            message="Analyzing your document…"
+            subMessages={[
+              "Uploading securely…",
+              "Extracting text and structure…",
+              "Detecting risky clauses…",
+              "Summarizing key points…",
+            ]}
+          />
+        ) : null}
+        <FileUpload onUpload={handleFileUpload} loading={loading} />
+      </>
+    );
   }
 
   return (
