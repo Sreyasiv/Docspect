@@ -1,7 +1,7 @@
 # 🕵️‍♂️ Docspect
-<p align="center">
-🚀 <b>AI-Powered Contract Analysis</b> that helps you <i>review legal documents in minutes</i>.
-</p>
+
+<b>AI-Powered Contract Analysis</b> that helps you <i>review legal documents in minutes</i>.
+
 
 ---
 
