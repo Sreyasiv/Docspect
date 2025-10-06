@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <div className="bg-[hsl(38,8%,81%)] text-gray-900 font-sans">
       {/* Navbar */}
-      <nav className="flex justify-between items-center px-32 md:px-12 py-4 border-b shadow-md">
+      <nav className="flex justify-between items-center px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 py-4 border-b shadow-md">
         <span className="text-lg font-bold cursor-pointer">Docspect.AI</span>
         <div>
           <button
@@ -33,9 +33,9 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <div className="flex flex-col md:flex-row items-center justify-between px-32 py-10">
+      <div className="flex flex-col md:flex-row items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 py-10 gap-10">
         {/* Left Side - Text Content */}
-        <div className="max-w-2xl text-center md:text-left">
+        <div className="w-full md:max-w-2xl text-center md:text-left">
           <div className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
             <h1 className="flex items-center">Review any Contract With</h1>
             <div className="flex items-center mt-3">
@@ -63,8 +63,8 @@ export default function HomePage() {
         </div>
 
         {/* Right Side - Image */}
-        <div className="mt-14 md:mt-0 flex justify-center">
-          <img src={Banner} alt="Contract Analysis" className="w-lg max-w-2xl md:max-w-3xl lg:max-w-4xl" />
+        <div className="mt-10 md:mt-0 flex justify-center w-full">
+          <img src={Banner} alt="Contract Analysis" className="max-w-full md:max-w-2xl lg:max-w-3xl xl:max-w-4xl h-auto" />
         </div>
       </div>
 
@@ -72,7 +72,7 @@ export default function HomePage() {
 
 
       {/* How It Works Section */}
-      <div id="how-it-works" className="px-8 md:px-32 py-16 flex flex-col items-center text-center">
+      <div id="how-it-works" className="px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 py-16 flex flex-col items-center text-center">
         {/* Section Title */}
         <div className="w-3/4 border-b mx-auto mb-12"></div>
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800">
@@ -87,18 +87,18 @@ export default function HomePage() {
         {/* Steps Container */}
         <div className="mt-16 flex flex-col space-y-12 w-full max-w-4xl">
           {/* Step 1 */}
-          <div className="flex items-center justify-between w-full text-left">
+          <div className="flex flex-col md:flex-row items-center justify-between w-full text-left gap-6">
             <div className="max-w-md">
               <h3 className="font-bold text-2xl text-gray-800">Step 1: <br />Upload Your Contract</h3>
               <p className="mt-2 text-gray-600">
                 Easily drag and drop your PDF or text file into our secure platform.
               </p>
             </div>
-            <img src={Upload} alt="Upload Icon" className="w-36 h-36 md:w-40 md:h-40" />
+            <img src={Upload} alt="Upload Icon" className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40" />
           </div>
 
           {/* Step 2 */}
-          <div className="flex items-center justify-between w-full text-left">
+          <div className="flex flex-col md:flex-row items-center justify-between w-full text-left gap-6">
             <div className="max-w-md">
               <h3 className="font-bold text-2xl text-gray-800">Step 2: <br />Review Informational Insights</h3>
               <p className="mt-2 text-gray-600">
@@ -106,11 +106,11 @@ export default function HomePage() {
                 issues in order of their risk level.
               </p>
             </div>
-            <img src={Scan} alt="Scan Icon" className="w-36 h-36 md:w-40 md:h-40" />
+            <img src={Scan} alt="Scan Icon" className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40" />
           </div>
 
           {/* Step 3 */}
-          <div className="flex items-center justify-between w-full text-left">
+          <div className="flex flex-col md:flex-row items-center justify-between w-full text-left gap-6">
             <div className="max-w-md">
               <h3 className="font-bold text-2xl text-gray-800">Step 3: <br />Make Informed Decisions</h3>
               <p className="mt-2 text-gray-600">
@@ -118,7 +118,7 @@ export default function HomePage() {
                 finalize your contract with confidence.
               </p>
             </div>
-            <img src={Decision} alt="Decision Icon" className="w-36 h-36 md:w-40 md:h-40" />
+            <img src={Decision} alt="Decision Icon" className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40" />
           </div>
         </div>
       </div>
