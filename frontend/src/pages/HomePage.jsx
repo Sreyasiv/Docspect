@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <div className="bg-[hsl(38,8%,81%)] text-gray-900 font-sans">
       {/* Navbar */}
-      <nav className="flex justify-between items-center px-32 md:px-12 py-4 border-b shadow-md">
+<nav className="flex flex-wrap justify-between items-center px-6 sm:px-12 md:px-20 lg:px-32 py-4 border-b shadow-md">
         <span className="text-lg font-bold cursor-pointer">Docspect.AI</span>
         <div>
           <button

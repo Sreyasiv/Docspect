@@ -72,7 +72,8 @@ export default function DocspectUpload() {
         />
       ) : null}
       {/* Header */}
-      <div className="w-full py-6 px-32 border-b border-black shadow-md fixed top-0 left-0 bg-[hsl(38,8%,81%)] z-10">
+      <div className="w-full py-4 px-6 sm:px-10 md:px-20 lg:px-32 border-b border-black shadow-md fixed top-0 left-0 bg-[hsl(38,8%,81%)] z-10">
+
         <span className="text-lg font-bold cursor-pointer" onClick={() => navigate("/")}>
           Docspect.AI
         </span>
@@ -81,7 +82,7 @@ export default function DocspectUpload() {
       {/* Main */}
       <div className="flex-grow flex flex-col justify-center items-center">
         <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">Upload Your Document</h1>
-        <div className="bg-white shadow-lg rounded-lg p-8 w-[500px]">
+        <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md mx-4 sm:mx-0">
           <h2 className="text-lg font-semibold mb-2">Upload Document</h2>
           <p className="text-sm text-gray-500 mb-6">
             Please upload a file in PDF or DOCX format (Max: 25MB).
