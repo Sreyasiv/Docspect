@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.1",
     "@tailwindcss/vite": "^4.0.4",
     "axios": "^1.11.0",
     "lodash": "^4.17.21",
