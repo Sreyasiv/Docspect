@@ -1,26 +1,22 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-// import html2pdf from "html2pdf.js";
 import FileUpload from "../components/analysis/FileUpload";
 import RiskScoreGauge from "../components/analysis/RiskScoreGauge";
 import DocumentSummary from "../components/analysis/DocumentSummary";
 import Loader from "../components/Loader";
 import { pdf } from "@react-pdf/renderer";
 import ReportDocument from "../components/analysis/ReportDocument";
-
+import { Download } from "lucide-react";
 
 const base = import.meta.env.VITE_API_BASE;
 
-async function handleAnalysisGeneratePDF(summary, riskClauses, setLoading) {
+async function handleAnalysisGeneratePDF(summary, riskScore, setLoading) {
   if (!summary) return;
   try {
     if (setLoading) setLoading(true);
 
-    let computedScore = 56;
-    if (Array.isArray(riskClauses)) {
-      computedScore = Math.min(100, Math.round(riskClauses.length * 12 + 20));
-    }
+    const computedScore = Number.isFinite(riskScore) ? Math.max(0, Math.min(100, Math.round(riskScore))) : 56;
 
     const blob = await pdf(<ReportDocument summary={summary} riskScore={computedScore} />).toBlob();
     const url = URL.createObjectURL(blob);
@@ -55,8 +51,12 @@ export default function AnalysisPage() {
       const res = await axios.post(`${base}/api/summarize`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      const riskClauses = res.data.riskClauses ?? [];
+      const computedScore = Math.min(100, Math.round((riskClauses.length * 12) + 20));
       setAnalysisData({
-        summary: res.data,
+        summary: res.data.summary ?? res.data,
+        riskClauses,
+        riskScore: computedScore,
       });
     } catch (err) {
       console.error("Upload failed:", err);
@@ -101,12 +101,25 @@ export default function AnalysisPage() {
       <div className="flex-grow flex flex-col items-center pt-28 px-4 md:px-0">
         <div className="flex md:flex-row flex-col ">
           <div className="w-full max-w-6xl space-y-6" id="ai-reviewed-report">
-            <h1 className="text-3xl font-bold text-[#1D2B4F]" >AI-Reviewed Report</h1>
+            <div className="flex items-center justify-between">
+              <h1 className="text-3xl font-bold text-[#1D2B4F]">AI-Reviewed Report</h1>
+              <button
+                  onClick={() => handleAnalysisGeneratePDF(analysisData.summary, analysisData.riskScore, setLoading)}
+                disabled={loading || !analysisData?.summary}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-white font-semibold shadow-md transition
+                  ${loading || !analysisData?.summary ? "bg-gray-400 cursor-not-allowed" : "bg-gradient-to-r from-[#1D2D5F] to-[#16264d] hover:from-[#6583cf] hover:to-[#1840b8]"}`}
+                title="Download full report as PDF"
+              >
+                <Download className="w-4 h-4" />
+                <span>{loading ? "Preparing…" : "Download Report"}</span>
+              </button>
+              
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex gap-8">
               {/* Left */}
               <div className="md:col-span-2 space-y-8">
-                <RiskScoreGauge/>
+                  <RiskScoreGauge score={analysisData.riskScore} />
                 <DocumentSummary summary={analysisData.summary} />
                 
               </div>
@@ -114,12 +127,6 @@ export default function AnalysisPage() {
               {/* Right */}
               
             </div>
-        </div>
-            <button className="mt-32 bg-blue-500 text-white h-[10vh] px-6 py-3 rounded-md hover:bg-blue-600 transition"
-            onClick={() => handleAnalysisGeneratePDF(analysisData.summary, setLoading)}>
-              Download Report
-            </button>
-          <div>
         </div>
 
         </div>
