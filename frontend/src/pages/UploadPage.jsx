@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Loader from "../components/Loader";
+import scanningGif from "../assets/scanningText.gif";
 
 export default function DocspectUpload() {
   const [file, setFile] = useState(null);
@@ -61,15 +61,17 @@ export default function DocspectUpload() {
   return (
     <div className="bg-[hsl(38,8%,81%)] h-screen flex flex-col">
       {loading ? (
-        <Loader
-          message="Analyzing your document…"
-          subMessages={[
-            "Uploading securely…",
-            "Extracting text and structure…",
-            "Detecting risky clauses…",
-            "Summarizing key points…",
-          ]}
-        />
+        <div className="fixed inset-0 bg-white/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 shadow-lg max-w-md mx-auto text-center">
+            <img 
+              src={scanningGif} 
+              alt="Analyzing document" 
+              className="w-48 h-32 mx-auto mb-4 object-contain"
+            />
+            <h2 className="text-xl font-semibold text-[#1D2B4F] mb-4">Analyzing your document…</h2>
+            
+          </div>
+        </div>
       ) : null}
       {/* Header */}
       <div className="w-full py-6 px-32 border-b border-black shadow-md fixed top-0 left-0 bg-[hsl(38,8%,81%)] z-10">
