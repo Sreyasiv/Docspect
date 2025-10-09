@@ -15,7 +15,7 @@ function tryParseWithFixes(s) {
   if (!s) return null;
   try { return JSON.parse(s); } catch (e) {}
   try {
-    const fixed = s.replace(/,\s*([\]\}])/g, "$1");
+    const fixed = s.replace(/,\s*([\]}])/g, "$1");
     return JSON.parse(fixed);
   } catch (e) {}
   return null;
