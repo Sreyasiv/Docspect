@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+
 import FileUpload from "../components/analysis/FileUpload";
 import RiskScoreGauge from "../components/analysis/RiskScoreGauge";
 import DocumentSummary from "../components/analysis/DocumentSummary";

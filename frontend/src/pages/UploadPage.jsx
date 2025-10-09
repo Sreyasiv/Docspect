@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Loader from "../components/Loader";
+import scanningGif from "../assets/scanningText.gif";
 
 export default function DocspectUpload() {
   const [file, setFile] = useState(null);
@@ -61,15 +61,16 @@ export default function DocspectUpload() {
   return (
     <div className="bg-[hsl(38,8%,81%)] h-screen flex flex-col">
       {loading ? (
-        <Loader
-          message="Analyzing your document…"
-          subMessages={[
-            "Uploading securely…",
-            "Extracting text and structure…",
-            "Detecting risky clauses…",
-            "Summarizing key points…",
-          ]}
-        />
+        <div className="fixed inset-0   flex p-12 items-center justify-center  z-50 cursor-not-allowed">
+          <div className="bg-white rounded-lg p-8 shadow-lg max-w-md mx-auto mt-16  text-center">
+            <img 
+              src={scanningGif} 
+              alt="Analyzing document" 
+              className="lg:w-[30vw] lg:h-[37vh] w-[60vw] h-[45vh]  mx-auto mb-4 object-contain"
+            />
+            <h2 className="text-xl font-semibold text-[#1D2B4F] mb-4">Analyzing your document…</h2>
+          </div>
+        </div>
       ) : null}
       {/* Header */}
       <div className="w-full py-6 px-32 border-b border-black shadow-md fixed top-0 left-0 bg-[hsl(38,8%,81%)] z-10">
@@ -79,9 +80,9 @@ export default function DocspectUpload() {
       </div>
 
       {/* Main */}
-      <div className="flex-grow flex flex-col justify-center items-center">
+      <div className="flex-grow flex flex-col justify-center items-center ">
         <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">Upload Your Document</h1>
-        <div className="bg-white shadow-lg rounded-lg p-8 w-[500px]">
+        <div className="bg-white shadow-lg rounded-lg p-16 w-[90vw] md:w-[500px]">
           <h2 className="text-lg font-semibold mb-2">Upload Document</h2>
           <p className="text-sm text-gray-500 mb-6">
             Please upload a file in PDF or DOCX format (Max: 25MB).
