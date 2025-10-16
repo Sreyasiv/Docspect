@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
-const summarizeRoutes = require("./routes/summarizeRoutes");
+const analyzeRoutes = require("./routes/analyzeRoutes");
 
 const app = express();
 
@@ -25,7 +25,9 @@ if (!fs.existsSync("uploads")) {
 }
 
 // Routes
-app.use("/api", summarizeRoutes);
+
+app.use("/api", analyzeRoutes);
+
 
 
 
