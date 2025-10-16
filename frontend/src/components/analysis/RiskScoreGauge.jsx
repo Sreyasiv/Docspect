@@ -32,6 +32,7 @@ export default function RiskScoreGauge() {
                 { value: 20 },
                 { value: 40 },
                 { value: 60 },
+                { value: 80 },
                 { value: 100 },
               ],
             },

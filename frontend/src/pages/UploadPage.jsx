@@ -33,19 +33,34 @@ export default function DocspectUpload() {
     formData.append("document", file);
 
     try {
-      const response = await axios.post(`${base}/api/summarize`, formData, {
+      const response = await axios.post(`${base}/api/analyze`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      // Navigate to AnalysisPage with response data
+      // --- 👇 UPDATED: Extract and pass new LLM risk data fields 👇 ---
+      
+      // Calculate risk score based on the number of clauses returned
+      const risks = response.data.risks ?? [];
+      const computedScore = Math.min(100, Math.round((risks.length * 12) + 20));
+
+      // Navigate to AnalysisPage with ALL necessary response data
       navigate("/analysis", {
         state: {
           analysisData: {
             summary: response.data.summary,
-            recommendations: response.data.recommendations,
+            // 🛑 CRITICAL FIX 1: Use 'risks' key from backend, not 'riskClauses'
+            riskClauses: response.data.risks, 
+            riskScore: computedScore,
+            
+            // 📢 CRITICAL ADDITION 2: Pass LLM-specific risk fields
+            llmWarnings: response.data.llmWarnings ?? [],
+            llmDisclaimerRequired: response.data.llmDisclaimerRequired ?? false,
+            
+            // Assuming these keys will be added to the backend later, 
+            // but for now, we remove the commented/non-standard ones to avoid confusion 
+            // recommendations: response.data.recommendations,
             // keyClauses: response.data.keyClauses,
-            riskClauses: response.data.riskClauses,
-            caseStudies: response.data.caseStudies,
+            // caseStudies: response.data.caseStudies, 
           },
         },
       });
@@ -60,6 +75,7 @@ export default function DocspectUpload() {
 
   return (
     <div className="bg-[hsl(38,8%,81%)] h-screen flex flex-col">
+      {/* ... (Loader remains the same) */}
       {loading ? (
         <div className="fixed inset-0   flex p-12 items-center justify-center  z-50 cursor-not-allowed">
           <div className="bg-white rounded-lg p-8 shadow-lg max-w-md mx-auto mt-16  text-center">
