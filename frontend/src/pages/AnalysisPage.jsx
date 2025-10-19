@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react"; // 👈 Ensure useEffect is imported
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Download } from "lucide-react";
 
@@ -7,7 +7,7 @@ import FileUpload from "../components/analysis/FileUpload";
 import RiskScoreGauge from "../components/analysis/RiskScoreGauge";
 import DocumentSummary from "../components/analysis/DocumentSummary";
 import Loader from "../components/Loader";
-import LLMDisclaimerBanner from "../components/analysis/LLMDisclaimerBanner"; // 👈 New component import
+import LLMDisclaimerBanner from "../components/analysis/LLMDisclaimerBanner";
 import { pdf } from "@react-pdf/renderer";
 import ReportDocument from "../components/analysis/ReportDocument"; 
 import RiskClauseList from "../components/analysis/RiskClauseList";
@@ -19,7 +19,7 @@ async function handleAnalysisGeneratePDF(summary, riskScore, setLoading) {
   try {
     if (setLoading) setLoading(true);
 
-    const computedScore = Number.isFinite(riskScore) ? Math.max(0, Math.min(100, Math.round(riskScore))) : 56;
+    const computedScore = Number.isFinite(riskScore) ? Math.max(0, Math.min(100, Math.round(riskScore))) : 0; // ⚡ default 0
 
     const blob = await pdf(<ReportDocument summary={summary} riskScore={computedScore} />).toBlob();
     const url = URL.createObjectURL(blob);
@@ -42,59 +42,60 @@ export default function AnalysisPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 1. STATE INITIALIZATION: Safely read data passed via react-router-dom state
   const [analysisData, setAnalysisData] = useState(location.state?.analysisData || null);
   const [loading, setLoading] = useState(false);
 
-  // 🛑 DEBUGGING LOGS (Crucial to confirm data transfer success)
   useEffect(() => {
     console.log("AnalysisPage Mounted. Location State Received:", location.state);
     if (analysisData) {
-        console.log("AnalysisPage: Data successfully set to state.");
+      console.log("AnalysisPage: Data successfully set to state.");
     } else {
-        console.warn("AnalysisPage: analysisData is null. Showing upload fallback UI.");
+      console.warn("AnalysisPage: analysisData is null. Showing upload fallback UI.");
     }
   }, [location.state, analysisData]);
 
-
+  // ------------------------------
+  // ⚡ FILE UPLOAD HANDLER
+  // ------------------------------
   const handleFileUpload = async (file) => {
     setLoading(true);
     const formData = new FormData();
     formData.append("document", file);
 
     try {
-      // 🛑 FIX: Use the correct backend route: /api/analyze (not /api/summarize)
       const res = await axios.post(`${base}/api/analyze`, formData, { 
         headers: { "Content-Type": "multipart/form-data" },
       });
-      
-      // 🛑 FIX/UPDATE: Extract ALL new LLM risk data fields (risks, llmWarnings, llmDisclaimerRequired)
-      const risks = res.data.risks ?? []; 
+
+      // Extract backend response
+      const risks = res.data.risks ?? [];
       const llmWarnings = res.data.llmWarnings ?? [];
       const llmDisclaimerRequired = res.data.llmDisclaimerRequired ?? false;
 
-      // Score calculation
-      const computedScore = Math.min(100, Math.round((risks.length * 12) + 20));
-      
-      // Update state with all necessary fields
+      // ⚡ Use AI-generated riskScore directly
+      const aiRiskScore = Number.isFinite(res.data.riskScore) ? res.data.riskScore : 0;
+
       setAnalysisData({
         summary: res.data.summary ?? res.data,
-        riskClauses: risks, // Mapped from backend 'risks' for frontend consistency
-        riskScore: computedScore,
-        llmWarnings, // 👈 New field
-        llmDisclaimerRequired, // 👈 New field
+        riskClauses: risks,
+        riskScore: aiRiskScore,
+        llmWarnings,
+        llmDisclaimerRequired,
       });
 
-      console.log("✅ Analysis complete via in-page upload. State updated.");
+      console.log("✅ Analysis complete. State updated with AI risk score:", aiRiskScore);
+
     } catch (err) {
-      console.error("❌ In-page Upload failed:", err);
+      console.error("❌ File analysis failed:", err);
       alert("Failed to analyze document. Please check console for details.");
     }
 
     setLoading(false);
   };
-  
-  // 2. Render Logic: Loader or Fallback
+
+  // ------------------------------
+  // Loader or fallback UI
+  // ------------------------------
   if (loading) {
      return (
         <Loader
@@ -109,13 +110,13 @@ export default function AnalysisPage() {
      );
   }
 
-  // Fallback UI if analysisData is null (direct navigation or refresh)
   if (!analysisData) {
-    // Pass the local handleFileUpload to the FileUpload component
     return <FileUpload onUpload={handleFileUpload} loading={loading} />;
   }
 
-  // 3. Render the main report
+  // ------------------------------
+  // Main report render
+  // ------------------------------
   return (
     <div className="bg-[#d9d3c8] min-h-screen flex flex-col">
       {/* Top Bar */}
@@ -147,21 +148,18 @@ export default function AnalysisPage() {
               </button>
             </div>
             
-            {/* 🛑 NEW FEATURE: Display LLM Disclaimer Banner */}
+            {/* LLM Disclaimer Banner */}
             {analysisData.llmDisclaimerRequired && (
                 <LLMDisclaimerBanner warnings={analysisData.llmWarnings} />
             )}
 
             <div className="flex gap-8">
-              {/* Left Column */}
               <div className="md:col-span-2 space-y-8">
+                  {/* ⚡ Use AI-generated riskScore here */}
                   <RiskScoreGauge score={analysisData.riskScore} /> 
                   <DocumentSummary summary={analysisData.summary} />
                   <RiskClauseList riskClauses={analysisData.riskClauses}/>
-                  
-                
               </div>
-              
             </div>
         </div>
       </div>

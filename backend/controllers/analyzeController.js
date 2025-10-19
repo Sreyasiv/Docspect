@@ -12,6 +12,7 @@ async function analyzeDocumentHandler(req, res) {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
+    // --- Extract text ---
     let text = "";
     if (file.mimetype === "application/pdf") {
       text = await extractTextFromPDF(file.path);
@@ -22,75 +23,65 @@ async function analyzeDocumentHandler(req, res) {
       return res.status(400).json({ error: "Unsupported file type" });
     }
 
-    // --- LOG 1: Input Data Size ---
     console.log(`🔎 ANALYZE_LOG: Document text extracted. Size: ${text.length} characters.`);
     fs.unlinkSync(file.path);
 
-    // Run summarization and risk detection in parallel
-    const [summaryResult, riskResult] = await Promise.all([
+    // --- Run summarization and risk detection in parallel ---
+    const [summaryResult, riskResultObj] = await Promise.all([
       summarizeDocument(text),
-      detectRiskClauses(text)
+      detectRiskClauses(text) // ⚡ now returns { clauses, riskScore }
     ]);
-    
-    // --- LOG 2: Results from Services ---
-    console.log("🔎 ANALYZE_LOG: Summarization Service returned:", summaryResult ? { keys: Object.keys(summaryResult), summaryLength: summaryResult.summary?.length, truncated: summaryResult.truncated } : "null");
-    console.log("🔎 ANALYZE_LOG: Risk Detection Service returned:", riskResult ? `${riskResult.length} risks detected.` : "null");
 
+    // --- Extract clauses and AI-generated score ---
+    const riskClausesRaw = riskResultObj?.clauses ?? [];
+    const riskScore = riskResultObj?.riskScore ?? 0;
 
-    // ---CRITICAL FIX: MAP LLM KEYS TO FRONTEND KEYS ---
-    const risks = riskResult ?? [];
-    
-    // The RiskClauseList component expects clause_snippet and ai_suggestion.
-    // The LLM provides 'clause' and 'explanation'. We must map them here.
-    const formattedRisks = risks.map(r => ({
-        // Map 'clause' to 'clause_snippet'
-        clause_snippet: r.clause, 
-        // Map 'explanation' to 'ai_suggestion'
-        ai_suggestion: r.explanation, 
-        // Keep other fields (severity, risk_type) for component logic
-        severity: r.severity,
-        risk_type: r.risk_type,
+    // --- Map AI keys to frontend keys ---
+    const formattedRisks = riskClausesRaw.map(r => ({
+      clause_snippet: r.clause,      // 'clause' -> 'clause_snippet'
+      ai_suggestion: r.explanation,  // 'explanation' -> 'ai_suggestion'
+      severity: r.severity,
+      risk_type: r.risk_type,
     }));
-    // --- END CRITICAL FIX ---
 
-
-    // --- LLM RISK CLAUSE INJECTION ---
+    // --- LLM disclaimer info ---
     const llmDisclaimerRequired = true;
     const llmWarnings = [
       "AI Analysis is an ASSISTANT, NOT a substitute for professional legal advice.",
       "LLM output may contain **Hallucinations** (inaccuracies or fabrications). Always verify against the original document.",
       "The service is provided 'AS IS' and accuracy is not warranted.",
     ];
-    
-    // Construct unified response using the formatted array
+
+    // --- Construct unified response ---
     const response = {
       ok: true,
       summary: summaryResult?.summary || [],
-      risks: formattedRisks, // 👈 USE THE MAPPED ARRAY
+      risks: formattedRisks,       // mapped array for frontend
+      riskScore,                   // ⚡ AI-generated score included
       truncated: !!summaryResult?.truncated,
       llmDisclaimerRequired,
       llmWarnings,
     };
 
-    // --- LOG 3: FINAL RESPONSE OBJECT ---
+    // --- Logs ---
     console.log("=========================================================");
     console.log("FINAL RESPONSE PAYLOAD SENT TO FRONTEND:");
     console.log(`  - ok: ${response.ok}`);
     console.log(`  - summary: [${response.summary?.length || 0} sections]`);
     console.log(`  - risks: [${response.risks?.length || 0} clauses]`);
+    console.log(`  - riskScore: ${response.riskScore}`); // ⚡ log the AI score
     console.log(`  - truncated: ${response.truncated}`);
     console.log(`  - llmDisclaimerRequired: ${response.llmDisclaimerRequired}`);
     console.log(`  - llmWarnings: [${response.llmWarnings?.length || 0} warnings]`);
-    
-    // Log a sample of the actual data to verify content
     if (response.risks?.length > 0) {
-        // Log sample using the new mapped keys to confirm structure is correct
-        console.log(`  - Risk Sample (Mapped): Clause Snippet Exists: ${!!response.risks[0].clause_snippet}, AI Suggestion Exists: ${!!response.risks[0].ai_suggestion}`);
+      console.log(`  - Risk Sample (Mapped): Clause Snippet Exists: ${!!response.risks[0].clause_snippet}, AI Suggestion Exists: ${!!response.risks[0].ai_suggestion}`);
     }
     console.log("=========================================================");
 
+    // --- Send response ---
     res.json(response);
     console.log("Document analyzed successfully! (Response Sent)");
+
   } catch (err) {
     console.error(" Error in analyzeDocumentHandler:", err);
     res.status(500).json({ error: "Failed to analyze document" });

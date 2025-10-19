@@ -1,8 +1,9 @@
 import { Shield, ShieldCheck, AlertTriangle, Ban } from "lucide-react";
 import GaugeComponent from "react-gauge-component";
 
-export default function RiskScoreGauge() {
-  const displayScore = 56; // hardcoded to 1%
+export default function RiskScoreGauge({ score }) {
+  // ⚡ Use the passed-in score, default to 0 if undefined
+  const displayScore = Number.isFinite(score) ? score : 0;
 
   return (
     <div className="bg-white rounded-lg p-6 shadow-md mb-4">
@@ -24,7 +25,6 @@ export default function RiskScoreGauge() {
             padding: 0.02,
           }}
           labels={{
-            
             tickLabels: {
               type: "outer",
               ticks: [
