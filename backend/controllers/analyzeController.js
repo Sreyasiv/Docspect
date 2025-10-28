@@ -47,9 +47,9 @@ async function analyzeDocumentHandler(req, res) {
     // --- LLM disclaimer info ---
     const llmDisclaimerRequired = true;
     const llmWarnings = [
-      "AI Analysis is an ASSISTANT, NOT a substitute for professional legal advice.",
-      "LLM output may contain **Hallucinations** (inaccuracies or fabrications). Always verify against the original document.",
-      "The service is provided 'AS IS' and accuracy is not warranted.",
+      "DOCSPECT is still in testing — use it as a helper, not a final source of truth.",
+  "AI-generated results may include errors or incomplete interpretations. Please cross-check important details manually.",
+  "This feature is experimental and may not always reflect accurate or complete legal insights."
     ];
 
     // --- Construct unified response ---
