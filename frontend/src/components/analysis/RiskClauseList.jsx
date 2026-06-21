@@ -1,49 +1,57 @@
-// components/analysis/RiskClauseList.jsx
-
 import React from 'react';
-import { Gavel } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 export default function RiskClauseList({ riskClauses }) {
   if (!riskClauses || riskClauses.length === 0) {
     return (
-      <div className="bg-white rounded-lg p-6 shadow-md border-l-4 border-green-500">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center space-x-2 mb-4">
-          <Gavel className="w-6 h-6 text-[#1D2D5F]" />
-          <span>Risk Clauses Found</span>
-        </h2>
-        <p className="text-gray-600">No significant risk clauses were detected in this document.</p>
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <p className="text-gray-500 text-sm">No risk clauses detected.</p>
       </div>
     );
   }
 
+  function getSeverityBadge(severity) {
+    if (severity === "High") {
+      return <span className="bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded">CRITICAL</span>;
+    }
+    if (severity === "Medium") {
+      return <span className="bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded">CAUTION</span>;
+    }
+    return <span className="bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded">NOTE</span>;
+  }
+
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md">
-      <h2 className="text-xl font-bold text-gray-800 flex items-center space-x-2 mb-6">
-        <Gavel className="w-6 h-6 text-[#1D2D5F]" />
-        <span>Detected Risk Clauses ({riskClauses.length})</span>
-      </h2>
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="flex items-center gap-2 mb-6">
+        <Shield className="w-5 h-5 text-gray-800" />
+        <h2 className="text-xl font-bold text-gray-900">Detected Risk Clauses</h2>
+      </div>
 
-      <div className="space-y-6">
+      {/* Cards grid */}
+      <div className="grid grid-cols-3 gap-4">
         {riskClauses.map((clause, index) => (
-          <div key={index} className="border-l-4 border-red-600 pl-4 py-1"> {/* The main red left border */}
-            
-            <h3 className="text-lg font-bold text-red-600 mb-3">
-              Clause {index + 1}
-            </h3>
+          <div key={index} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex flex-col gap-3">
+            {/* Row 1 — severity + section reference */}
+            <div className="flex items-center justify-between">
+              {getSeverityBadge(clause.severity)}
+              <span className="text-xs text-gray-400 font-medium">Clause {index + 1}</span>
+            </div>
 
-            {/* The Clause Text (Snippet) */}
-            <p className="text-gray-800 text-base mb-4">
-              {clause.clause_snippet || 'No clause snippet provided by the analysis.'}
+            {/* Row 2 — quoted clause text */}
+            <p className="text-sm text-gray-600 italic leading-relaxed border-l-2 border-gray-200 pl-3">
+              "{clause.clause_snippet}"
             </p>
 
-            {/* AI Suggestion Box */}
-            <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-md">
-              <h4 className="font-bold text-green-700 mb-2">AI Suggestion</h4>
-              <p className="text-gray-700 text-sm">
-                {clause.ai_suggestion || 'No suggestion provided for this clause.'}
+            {/* Row 3 — plain English translation box */}
+            <div className="bg-gray-50 rounded-lg p-3">
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
+                Plain-English Translation
+              </p>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                {clause.ai_suggestion}
               </p>
             </div>
-            
           </div>
         ))}
       </div>
