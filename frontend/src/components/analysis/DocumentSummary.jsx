@@ -132,33 +132,25 @@ export default function DocumentSummary({ summary, truncated }) {
   };
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md">
-      <div className="flex items-start justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center space-x-2">
-          <BookOpen className="w-6 h-6 text-[#1D2D5F]" />
-          <span>Document Summary</span>
-        </h2>
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
 
-        <div className="flex items-center space-x-3">
-          {truncated ? <span className="text-sm text-red-600">⚠️ Summary may be incomplete</span> : null}
-          <button onClick={copyJSON} className="text-sm text-gray-600 hover:underline">Copy JSON</button>
-        </div>
-      </div>
-
-      {sections.map((section, sidx) =>
-        Object.entries(section).map(([title, items], idx) => (
-          <div key={`${sidx}-${idx}`} className="mb-4">
-            <h3 className="font-semibold text-gray-800 mb-2">{title}</h3>
-            <ul className="list-disc ml-6 text-gray-700">
+      {/* Sections grid */}
+      <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+        {sections.map((section, sidx) =>
+          Object.entries(section).map(([title, items], idx) => (
+            <div key={`${sidx}-${idx}`} className="flex flex-col gap-1">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                {title}
+              </p>
               {items.map((it, i) => (
-                <li key={`${sidx}-${idx}-item-${i}`} className="break-words mb-1">
+                <p key={`${sidx}-${idx}-item-${i}`} className="text-sm text-gray-700 leading-relaxed">
                   <ShortExpandable text={String(it)} />
-                </li>
+                </p>
               ))}
-            </ul>
-          </div>
-        ))
-      )}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

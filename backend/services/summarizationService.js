@@ -1,6 +1,6 @@
 // summarizationService.js
 const splitIntoChunks = require("./chunker");
-const summarizeWithOpenRouter = require("../LLM/openRouterClient");
+const {summarizeWithOpenRouter} = require("../LLM/openRouterClient");
 
 const SENTINEL = "<<<END_SUMMARY>>>";
 

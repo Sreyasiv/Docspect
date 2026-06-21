@@ -1,10 +1,10 @@
-// backend/LLM/openRouterClient.js
 const axios = require('axios');
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-async function summarizeWithOpenRouter(prompt) {
-  // Fallback: no key present → return demo JSON so the app works end-to-end
+async function summarizeWithOpenRouter(prompt, options = {}) {
+  const max_tokens = options.max_tokens || 500;
+
   if (!OPENROUTER_API_KEY) {
     console.warn("OPENROUTER_API_KEY not set. Using demo fallback responses.");
     const isFinalStep = prompt.includes("Append exactly this token") || prompt.includes("<<<END_SUMMARY>>>");
@@ -14,9 +14,8 @@ async function summarizeWithOpenRouter(prompt) {
         { "Confidentiality": ["Recipient must not disclose information (demo)", "Reasonable safeguards required (demo)"] },
         { "Term & Termination": ["Term auto-renews unless notice (demo)", "Either party may terminate for breach (demo)"] }
       ];
-      return JSON.stringify(demo) + "<<<END_SUMMARY>>>"; // include sentinel for parser
+      return JSON.stringify(demo) + "<<<END_SUMMARY>>>";
     } else {
-      // chunk-level bullets
       return JSON.stringify([
         "Key obligations identified (demo)",
         "Payment terms noted (demo)",
@@ -25,14 +24,13 @@ async function summarizeWithOpenRouter(prompt) {
     }
   }
 
-  // Real call if key is present
   try {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
         model: 'openai/gpt-4o-mini',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 500,
+        max_tokens,  // ← now uses whatever is passed in
       },
       {
         headers: {
@@ -46,13 +44,16 @@ async function summarizeWithOpenRouter(prompt) {
       || response?.data?.output?.[0]?.content?.[0]?.text;
     return text;
   } catch (error) {
-    console.error("🛑 OpenRouter summarization failed:", {
+    console.error("🛑 OpenRouter call failed:", {
       message: error.message,
       status: error.response?.status,
       data: error.response?.data
     });
-    throw new Error("Summarization failed");
+    throw new Error("OpenRouter call failed");
   }
 }
 
-module.exports = summarizeWithOpenRouter;
+module.exports = {
+  summarizeWithOpenRouter,
+  analyzeWithOpenRouter: summarizeWithOpenRouter,
+};
